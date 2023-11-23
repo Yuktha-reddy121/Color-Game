@@ -1,57 +1,105 @@
-import tkinter
+from tkinter import *
 import random
-# list of colour.
-my_colours = ['Red','Blue','Green','Pink','Black','Yellow','Orange','White','Purple','Brown']
-my_score = 0
-my_timeleft = 30
-def my_startGame(event):
-   if my_timeleft == 30:
-      # start the countdown timer.
-      my_countdown()
-   my_nextColour()
-def my_nextColour():
-   global my_score
-   global my_timeleft
-   # if a game is currently in play
-   if my_timeleft > 0:
-      e.focus_set()
-      if e.get().lower() == my_colours[1].lower():
-         my_score += 1
-      # clear the text entry box.
-      e.delete(0, tkinter.END)
-      random.shuffle(my_colours)
-      label.config(fg = str(my_colours[1]), text = str(my_colours[0]))
-      # update the score.
-      my_scoreLabel.config(text = "Score: " + str(my_score))
-# Countdown timer function
-def my_countdown():
-   global my_timeleft
-   # if a game is in play
-   if my_timeleft > 0:
-      # decrement the timer.
-      my_timeleft -= 1
-      # update the time left label
-      my_timeLabel.config(text = "Time left: "+ str(my_timeleft))
-      # run the function again after 1 second.
-      my_timeLabel.after(1000, my_countdown)
-# Driver Code
-root = tkinter.Tk()
-root.title("COLORGAME")
-root.geometry("375x200")
-my_instructions = tkinter.Label(root, text = "Type in the color" "of the words, and not the word text!",
-   font = ('Helvetica', 12))
-my_instructions.pack()
-my_scoreLabel = tkinter.Label(root, text = "Press enter to start",
-   font = ('Helvetica', 12))
-my_scoreLabel.pack()
-my_timeLabel = tkinter.Label(root, text = "Time left: " +
-   str(my_timeleft), font = ('Helvetica', 12))
-my_timeLabel.pack()
-label = tkinter.Label(root, font = ('Helvetica', 60))
-label.pack()
-e = tkinter.Entry(root)
-root.bind('<Return>', my_startGame)
-e.pack()
-e.focus_set()
-# start the GUI
-root.mainloop()
+
+#list of possible colour. 
+colours = ['Red','Blue','Green','Pink','Black', 
+           'Yellow','Orange','White','Purple','Brown']
+
+score  = 0
+
+#To take in account the time left: initially 30 seconds
+time = 30
+
+#Function that will start the Game
+def startGame(event):
+
+    if time==30:
+
+        #start the countdown timer
+        countdown()
+
+    #run the function to chose the next color
+    nextcolor()
+
+def nextcolor():
+
+    global score
+    global time
+
+    #if a game is in play
+    if time > 0:
+
+        #make the text entry box active
+        colour_entry.focus_set()
+
+        if colour_entry.get().lower() == colours[1].lower():
+
+            score += 1
+
+        #clear the entry the box 
+        colour_entry.delete(0, END)
+
+        random.shuffle(colours) 
+
+        # change the colour to type, by changing the 
+        # text _and_ the colour to a random colour value
+        colour.config(fg= str(colours[1]) , text = str(colours[0]))
+
+        # update the score. 
+        scoreLabel.config(text = "Score: " + str(score))
+
+#Countdown Timer Fuction
+def countdown():
+
+    global time
+
+    #if a game is in play
+    if time > 0 :
+
+        #decrement the value
+        time -= 1
+
+        # update the time left label 
+        timeLabel.config(text = "Time left: "+ str(time))
+
+        # run the function again after 1 second. 
+        timeLabel.after(1000, countdown)
+
+#Driver Code
+if __name__=='__main__':
+
+    root = Tk()
+
+    #Setting the title 
+    root.title('Color Game') 
+
+    #Setting the geometry of the window
+    root.geometry('375x200')
+
+    #set an instruction label 
+    instructions = Label(root, text = 'Type in the colour of the words, and not the word text!', font = ('Helvetica', 12)) 
+    instructions.pack()
+
+    #Create a Score label
+    scoreLabel = Label(root, text = 'Score :'+str(score), font=('Helvetica' , 12))
+    scoreLabel.pack()
+
+    #Create a Time Label 
+    timeLabel = Label(root, text = 'Time Left : '+str(time), font=('Helvetica' , 12))
+    timeLabel.pack()
+
+    #create a colour label
+    colour = Label(root, font=('Helevetica',12))
+    colour.pack()
+
+    #Entry box for input from user
+    colour_entry = Entry(root)
+
+
+    colour_entry.focus_set()
+    root.bind('<Return>',startGame)
+
+    colour_entry.pack()
+
+    root.mainloop()
+
